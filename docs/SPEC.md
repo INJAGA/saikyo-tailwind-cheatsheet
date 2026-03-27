@@ -1,0 +1,157 @@
+# 仕様書
+
+## プロジェクト概要
+
+| 項目 | 内容 |
+|------|------|
+| 目的 | Tailwind CSS v4 のユーティリティクラスを視覚的・直感的に参照できる公開 Web アプリ |
+| ターゲット | 一般公開（誰でもアクセス可能） |
+| デプロイ先 | Cloudflare Workers |
+
+---
+
+## 機能要件
+
+### コア機能（最重要）: ライブ HTML デモプレビュー
+
+各ユーティリティクラスに対して、実際の HTML 要素にクラスを適用した視覚的なデモを表示する。
+
+- カテゴリごとに最適なプレビュー方法を検討・実装する
+  - Typography → サンプルテキストにクラスを適用して表示
+  - Spacing → ボックス要素で余白・間隔を可視化
+  - Backgrounds / Colors → カラースウォッチ
+  - Transforms / Transitions → アニメーション付き要素
+  - など、カテゴリ特性に合わせて設計する
+- 複数クラスを並べて違いを一目で比較できるようにする
+
+### その他の機能
+
+| 機能 | 詳細 |
+|------|------|
+| 全カテゴリ横断検索 | ヘッダー検索バーからクラス名・CSS 値・説明文（description）でリアルタイム絞り込み。検索中は全カテゴリを横断してヒットしたクラスのカードをカテゴリセクション別に一覧表示する |
+| クリップボードコピー | 各カードのコピーボタンでクラス名をコピー |
+| ダークモード | ヘッダーのトグルでライト/ダーク切り替え |
+
+---
+
+## UI/UX 仕様
+
+### レイアウト構成
+
+```
+┌────────────────────────────────────────────────────────────┐
+│  [Layout] [Flexbox] [Grid] ...  [🔍 検索...]  [🌙/☀️]      │  ← ヘッダー
+├────────────────────────────────────────────────────────────┤
+│  ## Display                                                  │  ← サブカテゴリ見出し
+│  ┌──────────────┐  ┌──────────────┐                         │
+│  │ block        │  │ inline-block │  ...                    │  ← ユーティリティクラスカード
+│  │ display:block│  │ display:...  │                         │
+│  │ ┌──────────┐ │  │ ┌──────────┐ │                         │
+│  │ │ [demo]   │ │  │ │ [demo]   │ │                         │  ← ライブプレビュー
+│  │ └──────────┘ │  │ └──────────┘ │                         │
+│  │ [📋 コピー]  │  │ [📋 コピー]  │                         │
+│  └──────────────┘  └──────────────┘                         │
+│  ## Position                                                 │
+│  ┌──────────────┐  ...                                       │
+└────────────────────────────────────────────────────────────┘
+```
+
+### ルーティング（SvelteKit）
+
+| パス | 内容 |
+|------|------|
+| `/` | デフォルトカテゴリ（Layout）へリダイレクト |
+| `/[category]` | 各カテゴリページ（例: `/layout`, `/flexbox`, `/typography`） |
+
+### カードの構成（1カード = 1ユーティリティクラス）
+
+- クラス名（コードフォント）
+- CSS プロパティ値
+- 説明文（日本語）
+- ライブ HTML デモプレビュー
+- クリップボードコピーボタン
+
+### カテゴリ内の整理
+
+各カテゴリページはサブカテゴリでセクション分割して表示する。
+
+例: `/layout` → `Display` / `Position` / `Inset` / ...
+
+### デザイン方針
+
+- シンプル・クリーン・明快・使いやすい
+- daisyUI v5 のコンポーネントを積極活用（`card`, `btn`, `badge` など）
+- Iconify アイコンで直感的な UI
+- 生の CSS や `<style>` ブロックは使用しない（Tailwind ユーティリティクラスのみ）
+- frontend-designスキルを使用する
+
+---
+
+## データ構造
+
+### 参考ドキュメント（実装時の参照用・実行時には使用しない）
+
+`src/lib/data/` 以下の 15 個の Markdown ファイルは実装時の参考資料。アプリのランタイムでは使用しない。
+
+```
+src/lib/data/
+├── 01-layout.md         # Display, Position, Inset など
+├── 02-flexbox.md        # Flex 関連
+├── 03-grid.md           # Grid 関連
+├── 04-spacing.md        # Padding, Margin, Gap
+├── 05-sizing.md         # Width, Height など
+├── 06-typography.md     # Font, Text など
+├── 07-backgrounds.md    # Background 関連
+├── 08-borders.md        # Border, Rounded
+├── 09-effects.md        # Shadow, Opacity
+├── 10-filters.md        # Blur, Brightness など
+├── 11-transitions.md    # Transition, Duration
+├── 12-transforms.md     # Rotate, Scale, Translate
+├── 13-interactivity.md  # Cursor, Pointer Events
+├── 14-svg.md            # Fill, Stroke
+└── 15-accessibility.md  # Screen Reader, Focus
+```
+
+### アプリで使用するデータ形式
+
+Markdown の内容を参照しながら、TypeScript の構造化データとして実装する。
+
+```typescript
+type UtilityClass = {
+  name: string;         // 例: "text-lg"
+  css: string;          // 例: "font-size: 1.125rem"
+  description?: string; // 例: "見出しに使う大きめのテキストサイズ" — 検索対象となる説明文（日本語）
+  preview?: string;     // プレビュー用の補助値（カテゴリごとに意味が異なる。下記テーブル参照）
+};
+
+type Subcategory = {
+  title: string;     // 例: "Font Size"
+  classes: UtilityClass[];
+};
+
+type Category = {
+  id: string;        // 例: "typography"（URLパスに使用）
+  title: string;     // 例: "Typography"
+  subcategories: Subcategory[];
+};
+```
+
+### カテゴリ別プレビュー実装方針
+
+| カテゴリ | プレビュー要素 | `preview` フィールドの用途 | 備考 |
+|---------|-------------|--------------------------|------|
+| Layout | `<div>` ボックス群 | — | display の種類で要素の並び方・表示形式を実演 |
+| Flexbox | 3〜4個の子 `<div>` を持つ flex コンテナ | — | 子要素の並び・折り返し・整列を実演 |
+| Grid | grid コンテナ + 子セル | — | グリッドの列数・行配置を実演 |
+| Spacing | 色付き `<div>` | — | padding/margin/gap を背景色で可視化 |
+| Sizing | 色付き `<div>` | — | width/height を実寸で表示 |
+| Typography | サンプルテキスト | — | "The quick brown fox..." にクラスを適用して表示 |
+| Backgrounds | 固定サイズの `<div>` | カラーコード or 画像URL | 背景色・グラデーション・パターンを表示 |
+| Borders | 固定サイズの `<div>` | — | ボーダーの太さ・スタイル・角丸を表示 |
+| Effects | 固定サイズの `<div>` | — | シャドウ・透明度を表示 |
+| Filters | 色付き `<div>` or サムネイル画像 | — | ブラー・輝度・コントラストなどを適用して比較 |
+| Transitions | hover で変化する `<div>` | — | ホバー時にトランジションが発動するデモ |
+| Transforms | 色付き `<div>` | — | 回転・拡縮・移動・傾斜を視覚化 |
+| Interactivity | テキスト or `<div>` | — | カーソル変化・テキスト選択禁止などを実演 |
+| SVG | Iconify アイコン SVG | — | fill/stroke の色・サイズを適用して表示 |
+| Accessibility | コードブロック + 説明テキスト | — | 視覚的デモが難しいため、動作説明を中心に表示 |

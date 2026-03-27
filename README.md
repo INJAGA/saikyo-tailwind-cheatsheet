@@ -1,6 +1,8 @@
-# my-svelte-template
+# saikyo-tailwind-cheatsheet
 
-自分用のSvelteKitテンプレートリポジトリ。
+Tailwind CSS v4 のユーティリティクラスを視覚的・直感的に参照できるチートシートアプリ。
+
+詳細な仕様は [SPEC.md](docs/SPEC.md) を参照。
 
 ## スタック
 
@@ -9,7 +11,7 @@
 - **[TailwindCSS v4](https://tailwindcss.com/)**
 - **[daisyUI v5](https://daisyui.com/)**
 - **[Iconify](https://iconify.design/)** (**[@iconify/tailwind4](https://iconify.design/docs/usage/css/tailwind/tailwind4/)**)
-- **[adapter-auto](https://svelte.dev/docs/kit/adapter-auto)** (デプロイ先プラットフォームを自動検出)
+- **[adapter-cloudflare](https://svelte.dev/docs/kit/adapter-cloudflare)** (Cloudflare Workers デプロイ)
 - **[ESLint](https://eslint.org/)** + **[Prettier](https://prettier.io/)**
 
 ## セットアップ
@@ -29,19 +31,6 @@ pnpm install
 | `pnpm lint` | lint & フォーマットチェック |
 | `pnpm format` | フォーマット |
 
-## アドオン
-
-[`sv add`](https://svelte.dev/docs/cli/sv-add) コマンドで機能を追加できる。
-
-```sh
-pnpm sv add drizzle      # Drizzle ORM
-pnpm sv add playwright   # Playwright (E2Eテスト)
-pnpm sv add vitest       # Vitest (ユニットテスト)
-pnpm sv add lucia        # Lucia (認証)
-```
-
-主なアドオン一覧は[公式ドキュメント](https://svelte.dev/docs/cli/sv-add)参照。
-
 ## AIエージェント
 
 ### エージェント指示ファイル
@@ -56,8 +45,6 @@ pnpm sv add lucia        # Lucia (認証)
 ### MCP設定
 
 [Svelte公式MCPサーバー](https://mcp.svelte.dev/)を設定済み。Svelte 5・SvelteKitのドキュメント参照、コード自動修正などが利用できる。
-
-利用可能なMCPツール:
 
 | ツール | 用途 |
 |---|---|

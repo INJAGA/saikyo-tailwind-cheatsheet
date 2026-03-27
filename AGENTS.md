@@ -1,3 +1,18 @@
+# エージェント指示
+
+## プロジェクト概要
+
+Tailwind CSS v4 のユーティリティクラスを視覚的・直感的に参照できるチートシートアプリ。
+
+- 仕様（機能要件・UI/UX・データ構造）: [SPEC.md](docs/SPEC.md)
+- 実装ロードマップ: [ROADMAP.md](docs/ROADMAP.md)
+
+作業前に必ずこれらのドキュメントを確認してください。
+
+---
+
+## Svelte MCP サーバー
+
 Svelte MCPサーバーを使用して、Svelte 5とSvelteKitの包括的なドキュメントにアクセスできます。以下のツールを効果的に活用してください。
 
 ## 利用可能なMCPツール
@@ -30,6 +45,15 @@ Svelteコードを記述する際は、**ユーザーに送る前に必ずこの
 - 開発用パッケージのインストール: `pnpm add -D <package>`
 - スクリプト実行: `pnpm <script>`
 - 開発サーバー起動: `pnpm run dev`
+
+## Svelte 5 コーディング規約
+
+このプロジェクトは **Svelte 5** を使用しています。必ず Runes 構文で記述してください。
+
+- 状態管理: `$state()` / `$derived()` / `$effect()`
+- プロップス受け取り: `let { foo } = $props()`
+- スニペット描画: `{@render children()}`
+- イベントハンドラー: `onclick={handler}`（`on:click` は使用しない）
 
 ## スタイリングガイドライン
 
