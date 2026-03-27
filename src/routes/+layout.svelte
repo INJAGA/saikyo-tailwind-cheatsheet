@@ -1,6 +1,7 @@
 <script lang="ts">
 	import './layout.css';
 	import favicon from '$lib/assets/favicon.svg';
+	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
 	import { categories } from '$lib/data/index';
 
@@ -31,32 +32,32 @@
 	<link rel="icon" href={favicon} />
 </svelte:head>
 
-<div class="min-h-screen bg-base-200 flex flex-col">
-	<header class="sticky top-0 z-50 bg-base-300 shadow-lg border-b border-base-content/10">
-		<div class="flex items-center gap-3 px-4 h-14">
+<div class="flex min-h-screen flex-col bg-base-200">
+	<header class="sticky top-0 z-50 border-b border-base-content/10 bg-base-300 shadow-lg">
+		<div class="flex h-14 items-center gap-3 px-4">
 			<!-- ブランド -->
-			<a href="/layout" class="flex items-center gap-2 shrink-0 no-underline">
+			<a href={resolve('/layout')} class="flex shrink-0 items-center gap-2 no-underline">
 				<span class="icon-[mdi--code-braces] text-xl text-primary"></span>
-				<span class="font-mono font-bold text-sm text-base-content hidden sm:block">
+				<span class="hidden font-mono text-sm font-bold text-base-content sm:block">
 					tailwind<span class="text-primary">.ref</span>
 				</span>
 			</a>
 
-			<div class="w-px h-6 bg-base-content/20 shrink-0 hidden sm:block"></div>
+			<div class="hidden h-6 w-px shrink-0 bg-base-content/20 sm:block"></div>
 
 			<!-- カテゴリタブ（横スクロール） -->
 			<nav class="flex-1 overflow-x-auto" style="scrollbar-width: none;">
-				<div class="flex items-center gap-0.5 min-w-max py-1">
+				<div class="flex min-w-max items-center gap-0.5 py-1">
 					{#each categories as category (category.id)}
 						<a
-							href="/{category.id}"
+							href={resolve(`/${category.id}`)}
 							aria-current={activeCategory === category.id ? 'page' : undefined}
-							class="flex items-center gap-1.5 px-2.5 py-1.5 rounded text-xs font-medium transition-colors duration-150 whitespace-nowrap
+							class="flex items-center gap-1.5 rounded px-2.5 py-1.5 text-xs font-medium whitespace-nowrap transition-colors duration-150
 								{activeCategory === category.id
-									? 'bg-primary/20 text-primary border border-primary/30'
-									: 'text-base-content/50 hover:text-base-content hover:bg-base-content/10'}"
+								? 'border border-primary/30 bg-primary/20 text-primary'
+								: 'text-base-content/50 hover:bg-base-content/10 hover:text-base-content'}"
 						>
-							<span class="{categoryIcons[category.id]} text-sm shrink-0"></span>
+							<span class="{categoryIcons[category.id]} shrink-0 text-sm"></span>
 							<span>{category.title}</span>
 						</a>
 					{/each}
@@ -65,7 +66,7 @@
 		</div>
 	</header>
 
-	<main class="flex-1 container mx-auto px-4 py-8 max-w-7xl">
+	<main class="container mx-auto max-w-7xl flex-1 px-4 py-8">
 		{@render children()}
 	</main>
 </div>

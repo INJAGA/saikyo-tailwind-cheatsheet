@@ -2,8 +2,8 @@ pre-commit:
   parallel: true
   commands:
     prettier:
-      glob: "*.{js,ts,svelte,json,css,md}"
+      glob: '*.{js,ts,svelte,json,css,md}'
       run: pnpm prettier --write {staged_files} && git add {staged_files}
     eslint:
-      glob: "*.{js,ts,svelte}"
+      glob: '*.{js,ts,svelte}'
       run: pnpm eslint --fix {staged_files} && git add {staged_files}
