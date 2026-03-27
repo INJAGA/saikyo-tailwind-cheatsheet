@@ -12,11 +12,11 @@
 - [x] `src/lib/types.ts` に `UtilityClass` / `Subcategory` / `Category` 型を定義
 
 ### #3 ルーティング・レイアウト
-- [ ] `src/routes/+layout.svelte` にカテゴリナビゲーションヘッダーを実装
-- [ ] `src/routes/[category]/+page.svelte` を作成（カテゴリページ）
-- [ ] `src/routes/[category]/+page.ts` で params からカテゴリデータを取得
-- [ ] `src/routes/+page.svelte` で `/layout` へリダイレクト
-- [ ] `src/lib/data/index.ts` — 全カテゴリをまとめてエクスポート
+- [x] `src/routes/+layout.svelte` にカテゴリナビゲーションヘッダーを実装
+- [x] `src/routes/[category]/+page.svelte` を作成（カテゴリページ）
+- [x] `src/routes/[category]/+page.ts` で params からカテゴリデータを取得
+- [x] `src/routes/+page.svelte` で `/layout` へリダイレクト
+- [x] `src/lib/data/index.ts` — 全カテゴリをまとめてエクスポート
 
 ### #4 共通コンポーネント
 - [ ] `src/lib/components/ClassCard.svelte` — クラスカードコンポーネント（名前・CSS値・プレビュー枠・コピーボタン）
