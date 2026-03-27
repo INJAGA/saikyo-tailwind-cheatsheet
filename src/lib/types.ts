@@ -2,7 +2,7 @@ export type UtilityClass = {
 	name: string; // e.g., "text-lg"
 	css: string; // e.g., "font-size: 1.125rem"
 	description?: string; // 検索用の説明（日本語）
-	preview?: string; // カテゴリ固有のプレビュー値
+	renderHint?: string; // カテゴリ固有のプレビュー用データ（例: 背景色コード、表示方式トークン）
 };
 
 export type Subcategory = {
