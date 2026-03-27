@@ -9,7 +9,7 @@
 - [x] `svelte.config.js` のアダプター設定を更新
 
 ### #2 データ型定義
-- [ ] `src/lib/types.ts` に `UtilityClass` / `Subcategory` / `Category` 型を定義
+- [x] `src/lib/types.ts` に `UtilityClass` / `Subcategory` / `Category` 型を定義
 
 ### #3 ルーティング・レイアウト
 - [ ] `src/routes/+layout.svelte` にカテゴリナビゲーションヘッダーを実装

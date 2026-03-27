@@ -1,0 +1,17 @@
+export type UtilityClass = {
+	name: string; // e.g., "text-lg"
+	css: string; // e.g., "font-size: 1.125rem"
+	description?: string; // 検索用の説明（日本語）
+	preview?: string; // カテゴリ固有のプレビュー値
+};
+
+export type Subcategory = {
+	title: string; // e.g., "Font Size"
+	classes: UtilityClass[];
+};
+
+export type Category = {
+	id: string; // URLパス e.g., "typography"
+	title: string; // e.g., "Typography"
+	subcategories: Subcategory[];
+};
