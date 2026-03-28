@@ -23,8 +23,9 @@
 
 ### #4 共通コンポーネント
 
-- [x] `src/lib/components/ClassCard.svelte` — クラスカードコンポーネント（名前・CSS値・プレビュー枠・コピーボタン）
+- [x] `src/lib/components/ClassCard.svelte` — クラスカードコンポーネント（名前・CSS値・プレビュー枠・コピーボタン・詳細ボタン）
 - [x] `src/lib/components/SubcategorySection.svelte` — サブカテゴリ見出し + カードグリッド
+- [x] `src/lib/components/ClassDetailModal.svelte` — クラス詳細モーダル（ビジュアルプレビュー・コード例・描画結果・ポイント）
 
 ---
 
@@ -38,6 +39,7 @@
 - [x] プレビュー方式を複数パターン試作してブラウザで確認・方式決定
 - [x] `src/lib/data/layout.ts` — データ作成（Display, Position, Z-Index, Overflow, Visibility, Float, Box Sizing, Object Fit, Object Position, Aspect Ratio）
 - [x] Layout プレビュー — `<div>` ボックス群で display の挙動を可視化
+- [x] 全77クラスに `example`（純粋Tailwindクラスのみ使用したHTMLコード例）と `points`（日本語ポイント）を追加
 
 ### #6 Flexbox
 
@@ -135,8 +137,8 @@
 
 ### #21 クリップボードコピー
 
-- [ ] `ClassCard` のコピーボタンに `navigator.clipboard.writeText` を実装
-- [ ] コピー成功時のフィードバック表示（トースト or アイコン変化）
+- [x] `ClassCard` のコピーボタンに `navigator.clipboard.writeText` を実装
+- [x] コピー成功時のフィードバック表示（アイコン変化 + "コピー済み" テキスト）
 
 ### #22 ダークモード
 

@@ -794,20 +794,16 @@
 
 				<!-- ── Aspect Ratio ── -->
 			{:else if cls.name === 'aspect-square'}
-				<div class="flex flex-col items-center gap-1">
-					<div
-						class="flex h-10 w-10 items-center justify-center rounded-md bg-primary/70 text-xs text-primary-content/80"
-					>
-						1:1
-					</div>
+				<div
+					class="flex aspect-square w-16 items-center justify-center rounded-md bg-primary/70 text-xs text-primary-content/80"
+				>
+					1:1
 				</div>
 			{:else if cls.name === 'aspect-video'}
-				<div class="flex flex-col items-center gap-1">
-					<div
-						class="flex h-9 w-16 items-center justify-center rounded-md bg-primary/70 text-xs text-primary-content/80"
-					>
-						16:9
-					</div>
+				<div
+					class="flex aspect-video w-28 items-center justify-center rounded-md bg-primary/70 text-xs text-primary-content/80"
+				>
+					16:9
 				</div>
 			{:else if cls.name === 'aspect-auto'}
 				<div class="flex items-end gap-2">

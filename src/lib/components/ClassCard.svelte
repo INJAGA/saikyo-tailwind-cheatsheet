@@ -1,9 +1,11 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 	import type { UtilityClass } from '$lib/types';
+	import ClassDetailModal from './ClassDetailModal.svelte';
 
 	let { cls, preview }: { cls: UtilityClass; preview?: Snippet<[UtilityClass]> } = $props();
 	let copied = $state(false);
+	let dialogEl = $state<HTMLDialogElement | null>(null);
 
 	function copy() {
 		navigator.clipboard.writeText(cls.name);
@@ -38,7 +40,19 @@
 			</p>
 		{/if}
 
-		<div class="mt-auto flex justify-end">
+		<div class="mt-auto flex items-center justify-between">
+			{#if cls.example || cls.points?.length}
+				<button
+					class="btn gap-1 text-base-content/40 btn-ghost btn-xs hover:text-secondary"
+					onclick={() => dialogEl?.showModal()}
+					aria-label="{cls.name} の詳細を見る"
+				>
+					<span class="icon-[mdi--information-outline] text-sm"></span>
+					<span>詳細を見る</span>
+				</button>
+			{:else}
+				<span></span>
+			{/if}
 			<button
 				class="btn gap-1 text-base-content/40 btn-ghost transition-colors btn-xs hover:text-primary"
 				onclick={copy}
@@ -55,3 +69,5 @@
 		</div>
 	</div>
 </div>
+
+<ClassDetailModal bind:dialogEl {cls} {preview} />
